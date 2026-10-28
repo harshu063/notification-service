@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/events/order-created-v1.schema.json",
+  "title": "order.created.v1",
+  "allOf": [
+    { "$ref": "event-envelope-v1.schema.json" },
+    {
+      "type": "object",
+      "properties": {
+        "eventType": { "const": "order.created.v1" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["orderId", "userId", "totalMinor", "currency", "orderVersion"],
+          "properties": {
+            "orderId": { "type": "string", "format": "uuid" },
+            "userId": { "type": "string" },
+            "totalMinor": { "type": "integer", "minimum": 0 },
+            "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+            "orderVersion": { "type": "integer", "minimum": 1 }
+          }
+        }
+      }
+    }
+  ]
+}

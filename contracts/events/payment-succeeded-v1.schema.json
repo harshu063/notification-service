@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/events/payment-succeeded-v1.schema.json",
+  "title": "payment.succeeded.v1",
+  "allOf": [
+    { "$ref": "event-envelope-v1.schema.json" },
+    {
+      "type": "object",
+      "properties": {
+        "eventType": { "const": "payment.succeeded.v1" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["paymentId", "orderId", "amountMinor", "currency", "paymentVersion"],
+          "properties": {
+            "paymentId": { "type": "string", "format": "uuid" },
+            "orderId": { "type": "string", "format": "uuid" },
+            "amountMinor": { "type": "integer", "minimum": 0 },
+            "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+            "paymentVersion": { "type": "integer", "minimum": 1 }
+          }
+        }
+      }
+    }
+  ]
+}

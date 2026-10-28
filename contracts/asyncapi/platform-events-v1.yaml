@@ -1,0 +1,61 @@
+asyncapi: 3.0.0
+info:
+  title: Event Commerce Platform Events
+  version: 1.0.0-draft
+  description: Initial Kafka contract. No runtime implementation exists yet.
+servers:
+  localKafka:
+    host: localhost:9092
+    protocol: kafka
+channels:
+  orderEvents:
+    address: commerce.order.events.v1
+    messages:
+      orderCreated:
+        $ref: '#/components/messages/OrderCreated'
+  paymentEvents:
+    address: commerce.payment.events.v1
+    messages:
+      paymentSucceeded:
+        $ref: '#/components/messages/PaymentSucceeded'
+operations:
+  publishOrderCreated:
+    action: send
+    channel: { $ref: '#/channels/orderEvents' }
+    messages: [ { $ref: '#/channels/orderEvents/messages/orderCreated' } ]
+  consumeOrderCreatedForNotifications:
+    action: receive
+    channel: { $ref: '#/channels/orderEvents' }
+    messages: [ { $ref: '#/channels/orderEvents/messages/orderCreated' } ]
+  publishPaymentSucceeded:
+    action: send
+    channel: { $ref: '#/channels/paymentEvents' }
+    messages: [ { $ref: '#/channels/paymentEvents/messages/paymentSucceeded' } ]
+  consumePaymentSucceededForOrders:
+    action: receive
+    channel: { $ref: '#/channels/paymentEvents' }
+    messages: [ { $ref: '#/channels/paymentEvents/messages/paymentSucceeded' } ]
+components:
+  messages:
+    OrderCreated:
+      name: order.created.v1
+      title: Order created
+      contentType: application/json
+      payload: { $ref: '../events/order-created-v1.schema.json' }
+      bindings:
+        kafka:
+          key:
+            type: string
+            description: tenantId:orderId
+          bindingVersion: 0.5.0
+    PaymentSucceeded:
+      name: payment.succeeded.v1
+      title: Payment succeeded
+      contentType: application/json
+      payload: { $ref: '../events/payment-succeeded-v1.schema.json' }
+      bindings:
+        kafka:
+          key:
+            type: string
+            description: tenantId:orderId
+          bindingVersion: 0.5.0

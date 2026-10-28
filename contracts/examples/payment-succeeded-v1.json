@@ -1,0 +1,23 @@
+{
+  "eventId": "f56aaee2-bddc-4f95-a421-cdb34e6cba9b",
+  "eventType": "payment.succeeded.v1",
+  "schemaVersion": 1,
+  "tenantId": "tenant-demo",
+  "source": "payment-service",
+  "subject": {
+    "type": "payment",
+    "id": "93ffcd2b-4747-442e-a2db-7f71fb038809"
+  },
+  "orderingKey": "tenant-demo:485f0f70-6501-4083-8c5c-8cbb3187140a",
+  "sequence": 2,
+  "occurredAt": "2026-09-21T00:01:00Z",
+  "correlationId": "checkout-demo-001",
+  "causationId": "2077683c-e14d-43d8-a290-3d2e9fe53970",
+  "payload": {
+    "paymentId": "93ffcd2b-4747-442e-a2db-7f71fb038809",
+    "orderId": "485f0f70-6501-4083-8c5c-8cbb3187140a",
+    "amountMinor": 4599,
+    "currency": "INR",
+    "paymentVersion": 1
+  }
+}
