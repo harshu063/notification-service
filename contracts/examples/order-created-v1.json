@@ -1,0 +1,22 @@
+{
+  "eventId": "2077683c-e14d-43d8-a290-3d2e9fe53970",
+  "eventType": "order.created.v1",
+  "schemaVersion": 1,
+  "tenantId": "tenant-demo",
+  "source": "order-service",
+  "subject": {
+    "type": "order",
+    "id": "485f0f70-6501-4083-8c5c-8cbb3187140a"
+  },
+  "orderingKey": "tenant-demo:485f0f70-6501-4083-8c5c-8cbb3187140a",
+  "sequence": 1,
+  "occurredAt": "2026-09-21T00:00:00Z",
+  "correlationId": "checkout-demo-001",
+  "payload": {
+    "orderId": "485f0f70-6501-4083-8c5c-8cbb3187140a",
+    "userId": "user-demo",
+    "totalMinor": 4599,
+    "currency": "INR",
+    "orderVersion": 1
+  }
+}
