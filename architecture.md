@@ -1,5 +1,7 @@
 # Implementable Architecture
 
+> Implementation status (2026-10-28): the repository currently implements Kafka event intake and a PostgreSQL idempotent inbox only. The broader routing, delivery, outbox publishing, provider integrations, and operator API shown below remain proposed. The implemented slice and its limits are summarized in [README.md](README.md).
+
 **Revision:** 2  
 **Date:** 2026-08-27  
 **Status:** Accepted baseline for phased implementation

@@ -70,6 +70,21 @@ Kafka is the durable asynchronous event backbone. PostgreSQL stores queryable st
 
 Technology choices will be pinned when implementation begins and recorded through Architecture Decision Records (ADRs).
 
+## Implemented first slice
+
+The current branch adds a Spring Boot Kafka consumer and PostgreSQL inbox. It validates the v1 event envelope, requires the Kafka record key to equal `orderingKey`, stores each event once by `eventId`, and retains the optional aggregate sequence for diagnostics. Consumer failures retry three times and then go to `<source-topic>.DLT`; provision the DLT with at least the source topic's partition count in shared environments.
+
+This is event intake only. Recipient subscriptions, channel routing, delivery outbox/dispatcher, webhook/email/push providers, authentication for producer access, and operational APIs remain future work. The 100,000 events/second target is not claimed as achieved; partition count, consumer concurrency, database batching, and provider quotas require load testing before that target can be accepted.
+
+### Local development
+
+1. Start PostgreSQL and Kafka with `docker compose up -d`.
+2. Create the `platform.events.v1` topic with six partitions and a matching `platform.events.v1.DLT` topic.
+3. Set local overrides from `.env.example` in the shell or IDE.
+4. Run `mvn test` and then `mvn spring-boot:run`.
+
+Producers must publish the canonical envelope described in [`../project-docs/contracts/events/event-envelope-v1.schema.json`](../project-docs/contracts/events/event-envelope-v1.schema.json) and use its `orderingKey` as the Kafka key. Ordering is per key and partition; there is no global ordering guarantee.
+
 ## Delivery semantics
 
 - A successful ingestion response means **durably accepted**, not delivered.
