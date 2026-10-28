@@ -83,6 +83,10 @@ This is event intake only. Recipient subscriptions, channel routing, delivery ou
 3. Set local overrides from `.env.example` in the shell or IDE.
 4. Run `mvn test` and then `mvn spring-boot:run`.
 
+### Integration tests
+
+`mvn -Dtest=NotificationInfrastructureIntegrationTest test` runs the PostgreSQL/Kafka integration slice with disposable Testcontainers. It verifies that Flyway creates the PostgreSQL inbox schema, duplicate Kafka deliveries materialize only once, and invalid record keys reach the dead-letter topic. Run `mvn test` for the complete suite. Docker Engine must be running and reachable by Testcontainers; environments without a usable Docker connection skip this integration class.
+
 Producers must publish the canonical envelope described in [`../project-docs/contracts/events/event-envelope-v1.schema.json`](../project-docs/contracts/events/event-envelope-v1.schema.json) and use its `orderingKey` as the Kafka key. Ordering is per key and partition; there is no global ordering guarantee.
 
 ## Delivery semantics
